@@ -7,11 +7,11 @@ A ros tool for converting Robosense pointcloud to Velodyne pointcloud format, wh
 RS-16, RS-32, RS-Ruby, RS-BP and RS-Helios LiDAR point cloud.
 
 ### 2. [robosense XYZI] to [velodyne XYZIR]:
-RS-16 and RS-Ruby LiDAR point cloud, More LiDAR model support is coming soon. 
+RS-16 and RS-Ruby LiDAR point cloud, More LiDAR model support is coming soon.
 ## Usage
 
 ### 1. XYZIRT input
-For **XYZIRT** format point clouds from `/rslidar_points` (Notice that, you need the latest 
+For **XYZIRT** format point clouds from `/rslidar_points` (Notice that, you need the latest
 [rslidar_sdk](https://github.com/RoboSense-LiDAR/rslidar_sdk) driver to get this type of point cloud):
 ```
 rosrun rs_to_velodyne rs_to_velodyne XYZIRT XYZIRT
@@ -19,14 +19,14 @@ rosrun rs_to_velodyne rs_to_velodyne XYZIRT XYZIRT
 rosrun rs_to_velodyne rs_to_velodyne XYZIRT XYZIR
 # or
 rosrun rs_to_velodyne rs_to_velodyne XYZIRT XYZI
-``` 
+```
 The output point clouds are **XYZIRT** / **XYZIR** / **XYZI** point cloud `/velodyne_points` in Velodyne's format.
 
 ### 2. XYZI input
 For **XYZI** format point clouds from `/rslidar_points`:
 ```
 rosrun rs_to_velodyne rs_to_velodyne XYZI XYZIR
-``` 
+```
 The output point clouds are **XYZIR** point cloud `/velodyne_points` in Velodyne's format.
 
 

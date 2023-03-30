@@ -23,21 +23,18 @@ static int RING_ID_MAP_16[] = {
         0, 1, 2, 3, 4, 5, 6, 7, 15, 14, 13, 12, 11, 10, 9, 8
 };
 
-// rslidar和velodyne的格式有微小的区别
-// rslidar的点云格式
 struct RsPointXYZIRT {
     PCL_ADD_POINT4D;
-    uint8_t intensity;
+    float intensity;
     uint16_t ring = 0;
     double timestamp = 0;
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 } EIGEN_ALIGN16;
 POINT_CLOUD_REGISTER_POINT_STRUCT(RsPointXYZIRT,
-                                  (float, x, x)(float, y, y)(float, z, z)(uint8_t, intensity, intensity)
+                                  (float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)
                                           (uint16_t, ring, ring)(double, timestamp, timestamp))
 
-// velodyne的点云格式
 struct VelodynePointXYZIRT {
     PCL_ADD_POINT4D
 
@@ -134,14 +131,10 @@ void handle_pc_msg(const typename pcl::PointCloud<T_in_p>::Ptr &pc_in,
         if (has_nan(pc_in->points[point_id]))
             continue;
         T_out_p new_point;
-//        std::copy(pc->points[point_id].data, pc->points[point_id].data + 4, new_point.data);
         new_point.x = pc_in->points[point_id].x;
         new_point.y = pc_in->points[point_id].y;
         new_point.z = pc_in->points[point_id].z;
         new_point.intensity = pc_in->points[point_id].intensity;
-//        new_point.ring = pc->points[point_id].ring;
-//        // 计算相对于第一个点的相对时间
-//        new_point.time = float(pc->points[point_id].timestamp - pc->points[0].timestamp);
         pc_out->points.push_back(new_point);
     }
 }
@@ -202,7 +195,6 @@ int main(int argc, char **argv) {
                 "Please specify input pointcloud type( XYZI or XYZIRT) and output pointcloud type(XYZI, XYZIR, XYZIRT)!!!");
         exit(1);
     } else {
-        // 输出点云类型
         output_type = argv[2];
 
         if (std::strcmp("XYZI", argv[1]) == 0) {
